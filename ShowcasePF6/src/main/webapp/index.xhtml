@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Showcase</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputScript library="primefaces" name="jquery/jquery.js"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
+    </h:head>    
+    <h:body> 
+        <style type="text/css">
+            .animated {
+                -moz-transition: all 0.25s ease-in;  /* FF4+ */
+                -o-transition: all 0.25s ease-in;  /* Opera 10.5+ */
+                -webkit-transition: all 0.25s ease-in;  /* Saf3.2+, Chrome */
+                -ms-transition: all 0.25s ease-in;  /* IE10 */
+                transition: all 0.25s ease-in;  
+            }
+            body {
+                margin: 0px;
+            }
+            #menu-control {
+            }
+            .page.expanded .sidebar {
+                left: 0px;
+            }
+            .page.expanded .main {
+                margin-left: 250px;
+            }
+            .page .main {
+                width: auto;
+            }
+            .page .main .header {
+                background-color: #1565C0;
+            }
+            .sidebar {                
+                left: -250px;
+                position:absolute;
+                top:0; 
+                bottom:0; 
+                width:250px;
+                background:#212121;
+            }
+            .sidebar .user {
+                text-align: center;
+                color: white;
+            }
+            .sidebar .user .picture .avatar {
+                border-radius: 100px;
+                border: 2px solid rgba(255, 255, 255, 0.75);
+            }
+            .sidebar .project {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                color: white;
+                text-align: center;
+            }
+            .page .content .header {
+                border:1px solid #000;
+                height:20px; 
+                margin:0 0 5px 0;
+            }
+            .page .content .content {
+                border:1px solid #000;
+                height:50px;
+            }
+            .page .content .footer {
+                border:1px solid #000; 
+                height:20px;
+                margin:5px 0 0 0;
+            }
+            .header .hamburger {
+                padding: 10px;
+                background-color: transparent;
+            }
+            .header .hamburger .piece {
+                background-color: white;
+                width: 26px;
+                height: 3px;
+            }
+            .header .hamburger .piece.middle {
+                margin-top: 4px;
+                margin-bottom: 4px;
+            }
+        </style>
+        <h:form prependId="false">
+            <script>
+                function toggleMenu() {
+                    var page = jQuery('#page');
+                    if (page.hasClass('expanded')) {
+                        page.removeClass('expanded');
+                    } else {
+                        page.addClass('expanded');
+                    }
+                }
+            </script>
+
+            <div id="page" class="page">
+                <div id="sidebar" class="sidebar animated">
+                    <div class="project">
+                        Hero
+                    </div>
+                    <div class="user">
+                        <div class="picture">
+                            <img src="https://graph.facebook.com/100003056356829/picture?type=large" 
+                                 alt="" width="80" height="80"
+                                 class="avatar"/>
+                        </div>
+                        <div class="name">
+                            Bonifaciojsj
+                        </div>
+                    </div>
+                    <div class="menu"></div>
+                </div>
+                <div class="main animated">
+                    <div class="header">
+                        <div class="hamburger" onclick="toggleMenu()">
+                            <div class="piece"/>
+                            <div class="piece middle"/>
+                            <div class="piece"/>
+                        </div>
+                        <div class="select"/>
+                    </div>
+                    <div class="content"></div>
+                    <div class="footer"></div>
+                </div>
+            </div>
+        </h:form>
+    </h:body>  
+</html>
