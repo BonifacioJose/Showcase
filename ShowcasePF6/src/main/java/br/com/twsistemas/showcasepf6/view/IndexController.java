@@ -11,7 +11,7 @@ import javax.inject.Named;
 @Named
 @ViewScoped
 public class IndexController implements Serializable {
-    
+
     private String console;
 
     public String getConsole() {
@@ -21,5 +21,5 @@ public class IndexController implements Serializable {
     public void setConsole(String console) {
         this.console = console;
     }
-    
+
 }

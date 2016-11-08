@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
     <h:head>
         <title>Showcase</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -22,6 +23,10 @@
             }
             body {
                 margin: 0px;
+            }
+            a {
+                color: inherit;
+                text-decoration: inherit;
             }
             #menu-control {
             }
@@ -44,10 +49,10 @@
                 bottom:0; 
                 width:250px;
                 background:#212121;
+                color: white;
             }
             .sidebar .user {
                 text-align: center;
-                color: white;
             }
             .sidebar .user .picture .avatar {
                 border-radius: 100px;
@@ -56,35 +61,35 @@
             .sidebar .project {
                 margin-top: 10px;
                 margin-bottom: 10px;
-                color: white;
                 text-align: center;
             }
-            .page .content .header {
-                border:1px solid #000;
-                height:20px; 
-                margin:0 0 5px 0;
+            .sidebar .menu {
+                vertical-align: middle;
             }
-            .page .content .content {
-                border:1px solid #000;
-                height:50px;
+            .sidebar .menu .items .item {
+                display: block;
+                padding: 8px;   
+                line-height: 20px;
             }
-            .page .content .footer {
-                border:1px solid #000; 
-                height:20px;
-                margin:5px 0 0 0;
+            .sidebar .menu .items .item:hover {
+                background-color: #757575;
+            }
+            .page .main .header {
+                height:50px; 
             }
             .header .hamburger {
-                padding: 10px;
+                padding: 14px;
                 background-color: transparent;
+                cursor: pointer;
             }
             .header .hamburger .piece {
                 background-color: white;
-                width: 26px;
-                height: 3px;
+                width: 30px;
+                height: 4px;
             }
             .header .hamburger .piece.middle {
-                margin-top: 4px;
-                margin-bottom: 4px;
+                margin-top: 5px;
+                margin-bottom: 5px;
             }
         </style>
         <h:form prependId="false">
@@ -102,7 +107,7 @@
             <div id="page" class="page">
                 <div id="sidebar" class="sidebar animated">
                     <div class="project">
-                        Hero
+                        #{i18n['project.name']}
                     </div>
                     <div class="user">
                         <div class="picture">
@@ -110,11 +115,21 @@
                                  alt="" width="80" height="80"
                                  class="avatar"/>
                         </div>
+                        <p:commandButton value="Modal" type="button" onclick="PF('changeAvatarDialog').show();" />
                         <div class="name">
                             Bonifaciojsj
                         </div>
                     </div>
-                    <div class="menu"></div>
+                    <div class="menu">
+                        <div class="items">
+                            <a href="/tasks" class="item animated">#{i18n['menu.tasks']}</a>
+                            <a href="/tasks" class="item animated">#{i18n['menu.tasks']}</a>
+                            <a href="/tasks" class="item animated">#{i18n['menu.tasks']}</a>
+                            <a href="/tasks" class="item animated">#{i18n['menu.tasks']}</a>
+                            <a href="/tasks" class="item animated">#{i18n['menu.tasks']}</a>
+                            <a href="/tasks" class="item animated">#{i18n['menu.tasks']}</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="main animated">
                     <div class="header">
@@ -130,5 +145,24 @@
                 </div>
             </div>
         </h:form>
+        <p:dialog responsive="true" header="#{i18n['dialog.title.changeAvatar']}" widgetVar="changeAvatarDialog" modal="true" height="300" width="500">
+            <h:form id="changeAvatarForm" prependId="false" enctype="multipart/form-data">  
+                <p:growl id="messages" showDetail="true" />  
+                <p:fileUpload auto="true" value="#{avatarUploadController.file}"
+                              fileUploadListener="#{avatarUploadController.handleFileUpload}" 
+                              sizeLimit="130000" update="@form" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" rendered="#{avatarUploadController.file == null}" />
+                <p:graphicImage id="newAvatar" value="#{avatarUploadController.imagestream}" rendered="#{avatarUploadController.file != null}"
+                                width="#{avatarUploadController.width}" height="#{avatarUploadController.height}">
+                    <f:param name="file" value="#{avatarUploadController.file.fileName}" />
+                </p:graphicImage>
+                <pe:imageAreaSelect id="areaSelect" for="newAvatar" handles="true" rendered="#{avatarUploadController.file != null}">  
+                    <p:ajax event="selectEnd" listener="#{avatarUploadController.selectEndListener}" update="avatarPreview :messages"/>  
+                </pe:imageAreaSelect> 
+                <p:graphicImage id="avatarPreview" value="#{avatarUploadController.imagestream2}"
+                                width="#{avatarUploadController.width}" height="#{avatarUploadController.height}">
+                    <f:param name="file" value="#{avatarUploadController.file.fileName}" />
+                </p:graphicImage>
+            </h:form>
+        </p:dialog> 
     </h:body>  
 </html>
